@@ -1,5 +1,5 @@
 <!-- ============================
- Timeless Smiles – Interactive Site with Google Login
+ Timeless Smiles – Site (Login Commented Out)
 ============================= -->
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,9 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
   <script defer src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <!-- Google Login temporarily disabled
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  -->
   <style>
     html { scroll-behavior: smooth; }
     body { background-color: #E4F6EF; }
@@ -22,10 +24,13 @@
     .rounded-section { border-radius: 1.5rem; }
     .hover-scale:hover { transform: scale(1.03); transition: transform 0.2s ease-in-out; }
     .member-card:hover { transform: scale(1.03); transition: transform 0.2s ease-in-out; }
-    #calendarSection, #membersSection, #aboutSection, #mainContent { display: none; }
+    /* hide only specific sections by default */
+    #calendarSection, #membersSection, #aboutSection { display: none; }
+    /* mainContent now visible by default */
   </style>
 </head>
 <body class="font-sans text-gray-700">
+  <!-- Login section commented out
   <div id="loginSection" class="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-green-100 to-pink-100">
     <h1 class="text-4xl font-extrabold text-green-800 mb-4">Welcome to Timeless Smiles</h1>
     <p class="text-lg text-gray-700 mb-6 text-center max-w-md">Please sign in with Google to access the club calendar and members area.</p>
@@ -36,8 +41,9 @@
     </div>
     <div class="g_id_signin" data-type="standard" data-theme="outline" data-size="large"></div>
   </div>
+  -->
 
-  <div id="mainContent">
+  <div id="mainContent"><!-- main site starts -->
     <header class="bg-gradient-to-r from-pink-100 to-green-100 p-4 flex items-center justify-between shadow rounded-b-2xl">
       <nav class="relative dropdown" id="mainDropdown">
         <button onclick="toggleDropdown()" class="text-green-800 font-bold px-4 py-2 rounded-full bg-white hover:bg-green-100 transition shadow hover-scale">☰</button>
@@ -101,7 +107,7 @@
         </div>
       </div>
     </section>
-  </div>
+  </div><!-- end mainContent -->
 
   <script>
     let calendarInstance;
@@ -119,33 +125,4 @@
       if(section==='members'){
         document.getElementById('membersSection').style.display='block';
       }
-      if(section==='about'){
-        document.getElementById('aboutSection').style.display='block';
-      }
-      document.getElementById('mainDropdown').classList.remove('open');
-    }
-    function handleCredentialResponse(response) {
-      document.getElementById('loginSection').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'block';
-    }
-    document.addEventListener('DOMContentLoaded',()=>{
-      calendarInstance = new FullCalendar.Calendar(document.getElementById('calendar'),{
-        initialView:'dayGridMonth',
-        showNonCurrentDates:false,
-        height:'auto',
-        headerToolbar:{left:'prev,next today',center:'title',right:'dayGridMonth,listMonth'},
-        events:[
-          {title:'Club Meeting',date:'2025-01-12'},
-          {title:'Community Visit',date:'2025-01-26'},
-          {title:'Fundraiser',date:'2025-02-14'},
-          {title:'Park Cleanup',date:'2025-03-10'},
-          {title:'Spring Social',date:'2025-04-05'}
-        ],
-        eventClick:({event})=>alert(`Event: ${event.title}`)
-      });
-      calendarInstance.render();
-    });
-  </script>
-</body>
-</html>
-
+      if(section

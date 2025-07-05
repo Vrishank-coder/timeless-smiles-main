@@ -7,8 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
   <script defer src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-  <!-- Commented out Google Sign-In for now -->
-  <!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     html { scroll-behavior: smooth; }
     body { background-color: #E4F6EF; }
@@ -22,10 +21,39 @@
     .member-card:hover { transform: scale(1.03); transition: transform 0.2s ease-in-out; }
     #calendarSection, #membersSection, #aboutSection { display: none; }
     #calendarMessage { display: none; }
+    #loginOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
   </style>
 </head>
 <body class="font-sans text-gray-700">
-  <div id="mainContent">
+  <div id="loginOverlay">
+    <div id="g_id_onload"
+         data-client_id="30331110488-fouagffdl9s0oejquq3d8aor7o6r83qr.apps.googleusercontent.com"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="true">
+    </div>
+    <div class="g_id_signin"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="pill"
+         data-logo_alignment="left">
+    </div>
+  </div>
+
+  <div id="mainContent" style="display: none;">
     <!-- HEADER -->
     <header class="bg-gradient-to-r from-pink-100 to-green-100 p-4 flex items-center justify-between shadow rounded-b-2xl">
       <!-- Hamburger -->
@@ -82,8 +110,7 @@
 
     function toggleDropdown(event) {
       event.stopPropagation();
-      const dropdown = document.getElementById('mainDropdown');
-      dropdown.classList.toggle('open');
+      document.getElementById('mainDropdown').classList.toggle('open');
     }
 
     function closeDropdown() {
@@ -106,6 +133,12 @@
       if (section === 'about') document.getElementById('aboutSection').style.display = 'block';
     }
 
+    function handleCredentialResponse(response) {
+      console.log("Google ID Token:", response.credential);
+      document.getElementById('loginOverlay').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'block';
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       calendarInstance = new FullCalendar.Calendar(document.getElementById('calendar'), {
         initialView: 'dayGridMonth',
@@ -122,17 +155,7 @@
         eventClick: ({ event }) => alert(`Event: ${event.title}`)
       });
       calendarInstance.render();
-      showSection('calendar');
-
-
-      google.accounts.id.initialize({
-        client_id: '30331110488-fouagffdl9s0oejquq3d8aor7o6r83qr.apps.googleusercontent.com',
-        callback: (response) => {
-          console.log("Google response:", response);
-        }
-      });
-      google.accounts.id.prompt();
-      
+      // Login required before showing calendar
     });
 
     document.addEventListener('click', handleOutsideClick);

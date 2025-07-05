@@ -19,13 +19,14 @@
     .hover-scale:hover { transform: scale(1.03); transition: transform 0.2s ease-in-out; }
     .member-card:hover { transform: scale(1.03); transition: transform 0.2s ease-in-out; }
     #calendarSection, #membersSection, #aboutSection { display: none; }
+    #calendarMessage { display: none; }
   </style>
 </head>
 <body class="font-sans text-gray-700">
   <div id="mainContent">
     <header class="bg-gradient-to-r from-pink-100 to-green-100 p-4 flex items-center justify-between shadow rounded-b-2xl">
-      <nav class="relative dropdown" id="mainDropdown">
-        <button onclick="toggleDropdown()" class="text-green-800 font-bold px-4 py-2 rounded-full bg-white hover:bg-green-100 transition shadow hover-scale">☰</button>
+      <nav class="relative dropdown" id="mainDropdown" onmouseover="openDropdown()" onmouseleave="closeDropdown()">
+        <button class="text-green-800 font-bold px-4 py-2 rounded-full bg-white hover:bg-green-100 transition shadow hover-scale">☰</button>
         <div class="dropdown-menu absolute bg-white border shadow mt-2 w-56 z-50">
           <button onclick="showSection('calendar')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Calendar</button>
           <button onclick="showSection('members')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Members</button>
@@ -35,7 +36,7 @@
       <h1 class="text-2xl font-extrabold text-green-800 text-center flex-grow">Timeless Smiles</h1>
     </header>
 
-    <div class="p-6">
+    <div id="calendarMessage" class="p-6">
       <p class="text-lg text-gray-700 text-center max-w-2xl mx-auto">Spreading joy through acts of kindness — one smile at a time!</p>
     </div>
 
@@ -90,21 +91,24 @@
 
   <script>
     let calendarInstance;
-    function toggleDropdown() {
-      document.getElementById('mainDropdown').classList.toggle('open');
+    function openDropdown() {
+      document.getElementById('mainDropdown').classList.add('open');
+    }
+    function closeDropdown() {
+      document.getElementById('mainDropdown').classList.remove('open');
     }
     function showSection(section) {
       ['calendarSection','membersSection','aboutSection'].forEach(id => {
         document.getElementById(id).style.display = 'none';
       });
+      document.getElementById('calendarMessage').style.display = (section === 'calendar') ? 'block' : 'none';
+      closeDropdown();
       if (section === 'calendar') {
         document.getElementById('calendarSection').style.display = 'block';
         if (calendarInstance) { calendarInstance.updateSize(); }
-      }
-      if (section === 'members') {
+      } else if (section === 'members') {
         document.getElementById('membersSection').style.display = 'block';
-      }
-      if (section === 'about') {
+      } else if (section === 'about') {
         document.getElementById('aboutSection').style.display = 'block';
       }
     }
@@ -124,7 +128,7 @@
         eventClick: ({ event }) => alert(`Event: ${event.title}`)
       });
       calendarInstance.render();
-      showSection('calendar'); // Show calendar on load
+      showSection('calendar');
     });
   </script>
 </body>

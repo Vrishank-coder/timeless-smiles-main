@@ -7,16 +7,19 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
   <script defer src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- Commented out Google Sign-In for now -->
+  <!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
   <style>
     html { scroll-behavior: smooth; }
     body { background-color: #E4F6EF; }
-    .dropdown-menu { display: none; border-radius: 1rem; }
+    .dropdown-menu { display: none; border-radius: 1rem; transition: all 0.3s ease; }
     .dropdown.open .dropdown-menu { display: block; }
-    .dropdown-menu button:hover { background-color: #FDE2E4; }
+    .dropdown-menu button:hover { background-color: #FDE2E4; transform: scale(1.03); transition: transform 0.2s ease-in-out; }
     .fc-day-other { background: transparent !important; color: transparent !important; }
     .fc-toolbar-title, .fc-button { text-transform: capitalize !important; }
     .rounded-section { border-radius: 1.5rem; }
+    .hover-scale:hover { transform: scale(1.03); transition: transform 0.2s ease-in-out; }
+    .member-card:hover { transform: scale(1.03); transition: transform 0.2s ease-in-out; }
     #calendarSection, #membersSection, #aboutSection { display: none; }
     #calendarMessage { display: none; }
   </style>
@@ -27,7 +30,7 @@
     <header class="bg-gradient-to-r from-pink-100 to-green-100 p-4 flex items-center justify-between shadow rounded-b-2xl">
       <!-- Hamburger -->
       <nav class="relative dropdown" id="mainDropdown">
-        <button onclick="toggleDropdown(event)" class="text-green-800 font-bold px-4 py-2 rounded-full bg-white hover:bg-green-100 shadow">☰</button>
+        <button onclick="toggleDropdown(event)" class="text-green-800 font-bold px-4 py-2 rounded-full bg-white hover:bg-green-100 shadow hover-scale">☰</button>
         <div class="dropdown-menu absolute bg-white border shadow mt-2 w-56 z-50">
           <button onclick="showSection('calendar')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Calendar</button>
           <button onclick="showSection('members')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Members</button>
@@ -50,16 +53,16 @@
       <div class="bg-white border shadow p-4 rounded-section">
         <div class="text-pink-700 font-semibold text-lg mb-4">Club Members</div>
         <ul class="divide-y">
-          <li class="py-4 px-2"><span class="font-medium text-green-800">Vrishank Arun</span><br><span class="text-sm text-gray-600">President</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 123‑4567<br>Email: vrishank@example.com</div></li>
-          <li class="py-4 px-2"><span class="font-medium text-green-800">Lochan Polisetty</span><br><span class="text-sm text-gray-600">Vice President</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 234‑5678<br>Email: lochan@example.com</div></li>
-          <li class="py-4 px-2"><span class="font-medium text-green-800">Shanvi Gupta</span><br><span class="text-sm text-gray-600">Treasurer / Secretary</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 345‑6789<br>Email: shanvi@example.com</div></li>
-          <li class="py-4 px-2"><span class="font-medium text-green-800">Aarna Bulusu</span><br><span class="text-sm text-gray-600">Publicist</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 456‑7890<br>Email: aarna@example.com</div></li>
+          <li class="py-4 px-2 member-card"><span class="font-medium text-green-800">Vrishank Arun</span><br><span class="text-sm text-gray-600">President</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 123‑4567<br>Email: vrishank@example.com</div></li>
+          <li class="py-4 px-2 member-card"><span class="font-medium text-green-800">Lochan Polisetty</span><br><span class="text-sm text-gray-600">Vice President</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 234‑5678<br>Email: lochan@example.com</div></li>
+          <li class="py-4 px-2 member-card"><span class="font-medium text-green-800">Shanvi Gupta</span><br><span class="text-sm text-gray-600">Treasurer / Secretary</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 345‑6789<br>Email: shanvi@example.com</div></li>
+          <li class="py-4 px-2 member-card"><span class="font-medium text-green-800">Aarna Bulusu</span><br><span class="text-sm text-gray-600">Publicist</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 456‑7890<br>Email: aarna@example.com</div></li>
         </ul>
       </div>
     </section>
 
     <section id="aboutSection" class="p-6 max-w-4xl mx-auto">
-      <div class="bg-white border shadow p-4 space-y-4 rounded-section">
+      <div class="bg-white border shadow p-4 space-y-4 rounded-section hover-scale">
         <h2 class="text-pink-700 font-semibold text-lg">About Us</h2>
         <p class="text-gray-700">Timeless Smiles is a high-school club dedicated to brightening our community through monthly volunteer visits, fundraising for local causes, and creative kindness campaigns. Our mission is simple: share a smile, spark hope, and build lasting connections.</p>
         <div>
@@ -121,15 +124,16 @@
       calendarInstance.render();
       showSection('calendar');
 
-      // Google One Tap
+      // Commented out Google One Tap
+      /*
       google.accounts.id.initialize({
         client_id: '30331110488-fouagffdl9s0oejquq3d8aor7o6r83qr.apps.googleusercontent.com',
         callback: (response) => {
           console.log("Google response:", response);
-          // You can add logic here to show the site only if logged in
         }
       });
       google.accounts.id.prompt();
+      */
     });
 
     document.addEventListener('click', handleOutsideClick);

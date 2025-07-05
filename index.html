@@ -7,48 +7,35 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
   <script defer src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     html { scroll-behavior: smooth; }
     body { background-color: #E4F6EF; }
-    .dropdown-menu { display: none; border-radius: 1rem; }
-    .dropdown.open .dropdown-menu { display: block; }
-    .dropdown-menu button:hover { background-color: #FDE2E4; }
+    .dropdown-menu { display: none; opacity: 0; transform: translateY(-10px); transition: all 0.3s ease; border-radius: 1rem; }
+    .dropdown.open .dropdown-menu { display: block; opacity: 1; transform: translateY(0); }
+    .dropdown-menu button:hover { transform: scale(1.05); transition: transform 0.2s ease-in-out; background-color: #FDE2E4; }
     .fc-day-other { background: transparent !important; color: transparent !important; }
     .fc-toolbar-title, .fc-button { text-transform: capitalize !important; }
     .rounded-section { border-radius: 1.5rem; }
-    #calendarSection, #membersSection, #aboutSection, #mainContent { display: none; }
+    .hover-scale:hover { transform: scale(1.03); transition: transform 0.2s ease-in-out; }
+    .member-card:hover { transform: scale(1.03); transition: transform 0.2s ease-in-out; }
+    #calendarSection, #membersSection, #aboutSection { display: none; }
     #calendarMessage { display: none; }
   </style>
 </head>
 <body class="font-sans text-gray-700">
-  <div id="loginScreen" class="flex items-center justify-center min-h-screen">
-    <div class="bg-white p-6 rounded-xl shadow text-center">
-      <h2 class="text-xl font-bold text-green-800 mb-4">Welcome to Timeless Smiles</h2>
-      <p class="mb-4 text-gray-600">Please sign in with Google to continue</p>
-      <div id="g_id_onload"
-           data-client_id="30331110488-fouagffdl9s0oejquq3d8aor7o6r83qr.apps.googleusercontent.com"
-           data-context="signin"
-           data-callback="handleCredentialResponse"
-           data-auto_prompt="true"></div>
-      <div class="g_id_signin" data-type="standard" data-size="large"></div>
-    </div>
-  </div>
-
   <div id="mainContent">
-    <!-- HEADER -->
     <header class="bg-gradient-to-r from-pink-100 to-green-100 p-4 flex items-center justify-between shadow rounded-b-2xl">
-      <!-- Hamburger -->
       <nav class="relative dropdown" id="mainDropdown">
-        <button onclick="toggleDropdown(event)" class="text-green-800 font-bold px-4 py-2 rounded-full bg-white hover:bg-green-100 shadow">☰</button>
-        <div class="dropdown-menu absolute bg-white border shadow mt-2 w-56 z-50">
-          <button onclick="showSection('calendar')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Calendar</button>
-          <button onclick="showSection('members')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Members</button>
-          <button onclick="showSection('about')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">About&nbsp;Us</button>
+        <div onmouseover="openDropdown()" onmouseleave="closeDropdown()">
+          <button class="text-green-800 font-bold px-4 py-2 rounded-full bg-white hover:bg-green-100 transition shadow hover-scale">☰</button>
+          <div class="dropdown-menu absolute bg-white border shadow mt-2 w-56 z-50">
+            <button onclick="showSection('calendar')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Calendar</button>
+            <button onclick="showSection('members')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Members</button>
+            <button onclick="showSection('about')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">About Us</button>
+          </div>
         </div>
       </nav>
       <h1 class="text-2xl font-extrabold text-green-800 text-center flex-grow">Timeless Smiles</h1>
-      <div id="authArea" class="text-green-700 font-semibold"></div>
     </header>
 
     <div id="calendarMessage" class="p-6">
@@ -64,16 +51,32 @@
       <div class="bg-white border shadow p-4 rounded-section">
         <div class="text-pink-700 font-semibold text-lg mb-4">Club Members</div>
         <ul class="divide-y">
-          <li class="py-4 px-2"><span class="font-medium text-green-800">Vrishank Arun</span><br><span class="text-sm text-gray-600">President</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 123‑4567<br>Email: vrishank@example.com</div></li>
-          <li class="py-4 px-2"><span class="font-medium text-green-800">Lochan Polisetty</span><br><span class="text-sm text-gray-600">Vice President</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 234‑5678<br>Email: lochan@example.com</div></li>
-          <li class="py-4 px-2"><span class="font-medium text-green-800">Shanvi Gupta</span><br><span class="text-sm text-gray-600">Treasurer / Secretary</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 345‑6789<br>Email: shanvi@example.com</div></li>
-          <li class="py-4 px-2"><span class="font-medium text-green-800">Aarna Bulusu</span><br><span class="text-sm text-gray-600">Publicist</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 456‑7890<br>Email: aarna@example.com</div></li>
+          <li class="py-4 px-2 member-card">
+            <span class="font-medium text-green-800">Vrishank Arun</span><br>
+            <span class="text-sm text-gray-600">President</span>
+            <div class="text-sm text-gray-500 mt-1">Phone: (555) 123‑4567<br>Email: vrishank@example.com</div>
+          </li>
+          <li class="py-4 px-2 member-card">
+            <span class="font-medium text-green-800">Lochan Polisetty</span><br>
+            <span class="text-sm text-gray-600">Vice President</span>
+            <div class="text-sm text-gray-500 mt-1">Phone: (555) 234‑5678<br>Email: lochan@example.com</div>
+          </li>
+          <li class="py-4 px-2 member-card">
+            <span class="font-medium text-green-800">Shanvi Gupta</span><br>
+            <span class="text-sm text-gray-600">Treasurer / Secretary</span>
+            <div class="text-sm text-gray-500 mt-1">Phone: (555) 345‑6789<br>Email: shanvi@example.com</div>
+          </li>
+          <li class="py-4 px-2 member-card">
+            <span class="font-medium text-green-800">Aarna Bulusu</span><br>
+            <span class="text-sm text-gray-600">Publicist</span>
+            <div class="text-sm text-gray-500 mt-1">Phone: (555) 456‑7890<br>Email: aarna@example.com</div>
+          </li>
         </ul>
       </div>
     </section>
 
     <section id="aboutSection" class="p-6 max-w-4xl mx-auto">
-      <div class="bg-white border shadow p-4 space-y-4 rounded-section">
+      <div class="bg-white border shadow p-4 space-y-4 rounded-section hover-scale">
         <h2 class="text-pink-700 font-semibold text-lg">About Us</h2>
         <p class="text-gray-700">Timeless Smiles is a high-school club dedicated to brightening our community through monthly volunteer visits, fundraising for local causes, and creative kindness campaigns. Our mission is simple: share a smile, spark hope, and build lasting connections.</p>
         <div>
@@ -90,32 +93,31 @@
 
   <script>
     let calendarInstance;
-
-    function handleCredentialResponse(response) {
-      const payload = JSON.parse(atob(response.credential.split('.')[1]));
-      const name = payload.name || 'User';
-      document.getElementById('authArea').innerText = `Hello, ${name.split(' ')[0]}`;
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'block';
-      showSection('calendar');
+    function openDropdown() {
+      document.getElementById('mainDropdown').classList.add('open');
     }
-
-    function toggleDropdown(event) {
-      event.stopPropagation();
-      document.getElementById('mainDropdown').classList.toggle('open');
+    function closeDropdown() {
+      const dropdown = document.getElementById('mainDropdown');
+      const isHovered = dropdown.matches(':hover');
+      if (!isHovered) {
+        dropdown.classList.remove('open');
+      }
     }
-    function closeDropdown() { document.getElementById('mainDropdown').classList.remove('open'); }
-    function handleOutsideClick(event) { if (!document.getElementById('mainDropdown').contains(event.target)) closeDropdown(); }
-
     function showSection(section) {
-      ['calendarSection','membersSection','aboutSection'].forEach(id => document.getElementById(id).style.display = 'none');
-      document.getElementById('calendarMessage').style.display = (section==='calendar') ? 'block' : 'none';
+      ['calendarSection','membersSection','aboutSection'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+      document.getElementById('calendarMessage').style.display = (section === 'calendar') ? 'block' : 'none';
       closeDropdown();
-      if (section === 'calendar') document.getElementById('calendarSection').style.display = 'block';
-      if (section === 'members') document.getElementById('membersSection').style.display = 'block';
-      if (section === 'about') document.getElementById('aboutSection').style.display = 'block';
+      if (section === 'calendar') {
+        document.getElementById('calendarSection').style.display = 'block';
+        if (calendarInstance) { calendarInstance.updateSize(); }
+      } else if (section === 'members') {
+        document.getElementById('membersSection').style.display = 'block';
+      } else if (section === 'about') {
+        document.getElementById('aboutSection').style.display = 'block';
+      }
     }
-
     document.addEventListener('DOMContentLoaded', () => {
       calendarInstance = new FullCalendar.Calendar(document.getElementById('calendar'), {
         initialView: 'dayGridMonth',
@@ -132,7 +134,10 @@
         eventClick: ({ event }) => alert(`Event: ${event.title}`)
       });
       calendarInstance.render();
+      showSection('calendar');
     });
   </script>
 </body>
 </html>
+
+

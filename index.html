@@ -94,7 +94,10 @@
       ['calendarSection','membersSection','aboutSection'].forEach(id => document.getElementById(id).style.display = 'none');
       document.getElementById('calendarMessage').style.display = (section==='calendar') ? 'block' : 'none';
       closeDropdown();
-      if (section === 'calendar') document.getElementById('calendarSection').style.display = 'block';
+      if (section === 'calendar') {
+        document.getElementById('calendarSection').style.display = 'block';
+        setTimeout(() => calendarInstance.updateSize(), 10);
+      }
       if (section === 'members') document.getElementById('membersSection').style.display = 'block';
       if (section === 'about') document.getElementById('aboutSection').style.display = 'block';
     }

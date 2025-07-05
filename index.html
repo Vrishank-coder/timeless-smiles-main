@@ -97,7 +97,7 @@
       closeDropdown();
       if (section === 'calendar') {
         document.getElementById('calendarSection').style.display = 'block';
-        setTimeout(() => calendarInstance.updateSize(), 10); // Fixes calendar glitch
+        setTimeout(() => calendarInstance.updateSize(), 0);
       }
       if (section === 'members') document.getElementById('membersSection').style.display = 'block';
       if (section === 'about') document.getElementById('aboutSection').style.display = 'block';
@@ -120,24 +120,19 @@
       });
       calendarInstance.render();
       showSection('calendar');
+
+      // Google One Tap
+      google.accounts.id.initialize({
+        client_id: '30331110488-fouagffdl9s0oejquq3d8aor7o6r83qr.apps.googleusercontent.com',
+        callback: (response) => {
+          console.log("Google response:", response);
+          // You can add logic here to show the site only if logged in
+        }
+      });
+      google.accounts.id.prompt();
     });
 
     document.addEventListener('click', handleOutsideClick);
-
-    // Google One Tap Login
-    window.onload = function () {
-      google.accounts.id.initialize({
-        client_id: "30331110488-fouagffdl9s0oejquq3d8aor7o6r83qr.apps.googleusercontent.com",
-        callback: handleCredentialResponse
-      });
-
-      google.accounts.id.prompt();
-    };
-
-    function handleCredentialResponse(response) {
-      console.log("Google login token:", response.credential);
-      // You can decode this token using a backend service or jwt.io
-    }
   </script>
 </body>
 </html>

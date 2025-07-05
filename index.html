@@ -10,9 +10,9 @@
   <style>
     html { scroll-behavior: smooth; }
     body { background-color: #E4F6EF; }
-    .dropdown-menu { display: none; border-radius: 1rem; opacity: 0; transform: translateY(-10px); transition: all 0.3s ease; }
-    .dropdown.open .dropdown-menu { display: block; opacity: 1; transform: translateY(0); }
-    .dropdown-menu button:hover { transform: scale(1.05); transition: transform 0.2s ease-in-out; background-color: #FDE2E4; }
+    .dropdown-menu { display: none; border-radius: 1rem; transition: all 0.3s ease; }
+    .dropdown.open .dropdown-menu { display: block; }
+    .dropdown-menu button:hover { background-color: #FDE2E4; transform: scale(1.03); transition: transform 0.2s ease-in-out; }
     .fc-day-other { background: transparent !important; color: transparent !important; }
     .fc-toolbar-title, .fc-button { text-transform: capitalize !important; }
     .rounded-section { border-radius: 1.5rem; }
@@ -25,17 +25,21 @@
 <body class="font-sans text-gray-700">
   <div id="mainContent">
     <!-- HEADER -->
-    <header class="bg-gradient-to-r from-pink-100 to-green-100 p-4 flex items-center justify-between shadow rounded-b-2xl">
-      <!-- Hamburger -->
-      <nav class="relative dropdown" id="mainDropdown">
-        <button onclick="toggleDropdown(event)" class="text-green-800 font-bold px-4 py-2 rounded-full bg-white hover:bg-green-100 shadow hover-scale">☰</button>
-        <div class="dropdown-menu absolute bg-white border shadow mt-2 w-56 z-50">
-          <button onclick="showSection('calendar')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Calendar</button>
-          <button onclick="showSection('members')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Members</button>
-          <button onclick="showSection('about')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">About&nbsp;Us</button>
-        </div>
-      </nav>
-      <h1 class="text-2xl font-extrabold text-green-800 text-center flex-grow">Timeless Smiles</h1>
+    <header class="bg-gradient-to-r from-pink-100 to-green-100 py-6 px-4 flex flex-col items-center shadow rounded-b-2xl">
+      <div class="flex justify-between w-full items-center">
+        <nav class="relative dropdown" id="mainDropdown">
+          <button onclick="toggleDropdown(event)" class="text-green-800 font-bold px-5 py-3 text-xl rounded-full bg-white hover:bg-green-100 shadow hover-scale">☰</button>
+          <div class="dropdown-menu absolute bg-white border shadow mt-2 w-56 z-50">
+            <button onclick="showSection('calendar')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Calendar</button>
+            <button onclick="showSection('members')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">Members</button>
+            <button onclick="showSection('about')" class="block w-full text-left px-4 py-2 text-green-700 font-semibold rounded-md">About&nbsp;Us</button>
+          </div>
+        </nav>
+      </div>
+      <div class="mt-4 flex flex-col items-center">
+        <img src="A_logo_design_features_the_text_\"Timeless_Smiles\"_.png" alt="Timeless Smiles Logo" class="h-20 w-auto mb-2" />
+        <h1 class="text-4xl font-extrabold text-green-800 text-center tracking-tight drop-shadow-sm">Timeless Smiles</h1>
+      </div>
     </header>
 
     <div id="calendarMessage" class="p-6">
@@ -98,7 +102,7 @@
       closeDropdown();
       if (section === 'calendar') {
         document.getElementById('calendarSection').style.display = 'block';
-        setTimeout(() => { calendarInstance.updateSize(); }, 10);
+        setTimeout(() => calendarInstance.updateSize(), 0);
       }
       if (section === 'members') document.getElementById('membersSection').style.display = 'block';
       if (section === 'about') document.getElementById('aboutSection').style.display = 'block';
@@ -127,4 +131,3 @@
   </script>
 </body>
 </html>
-

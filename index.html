@@ -21,21 +21,12 @@
     .member-card:hover { transform: scale(1.03); transition: transform 0.2s ease-in-out; }
     #calendarSection, #membersSection, #aboutSection { display: none; }
     #calendarMessage { display: none; }
-    #loginOverlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(255, 255, 255, 0.95);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
+    #g_id_onload, .g_id_signin { display: none; }
   </style>
 </head>
 <body class="font-sans text-gray-700">
-  <div id="loginOverlay">
+  <div id="mainContent">
+    <!-- Google Sign-in -->
     <div id="g_id_onload"
          data-client_id="30331110488-fouagffdl9s0oejquq3d8aor7o6r83qr.apps.googleusercontent.com"
          data-context="signin"
@@ -43,17 +34,7 @@
          data-callback="handleCredentialResponse"
          data-auto_prompt="true">
     </div>
-    <div class="g_id_signin"
-         data-type="standard"
-         data-size="large"
-         data-theme="outline"
-         data-text="sign_in_with"
-         data-shape="pill"
-         data-logo_alignment="left">
-    </div>
-  </div>
 
-  <div id="mainContent" style="display: none;">
     <!-- HEADER -->
     <header class="bg-gradient-to-r from-pink-100 to-green-100 p-4 flex items-center justify-between shadow rounded-b-2xl">
       <!-- Hamburger -->
@@ -110,7 +91,8 @@
 
     function toggleDropdown(event) {
       event.stopPropagation();
-      document.getElementById('mainDropdown').classList.toggle('open');
+      const dropdown = document.getElementById('mainDropdown');
+      dropdown.classList.toggle('open');
     }
 
     function closeDropdown() {
@@ -134,9 +116,8 @@
     }
 
     function handleCredentialResponse(response) {
-      console.log("Google ID Token:", response.credential);
-      document.getElementById('loginOverlay').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'block';
+      console.log("Google ID token:", response.credential);
+      // You could show a welcome message here or restrict access
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -155,7 +136,7 @@
         eventClick: ({ event }) => alert(`Event: ${event.title}`)
       });
       calendarInstance.render();
-      // Login required before showing calendar
+      showSection('calendar');
     });
 
     document.addEventListener('click', handleOutsideClick);

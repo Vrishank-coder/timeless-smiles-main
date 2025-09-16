@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- ✅ This makes the website scale correctly on phones -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Timeless Smiles 1</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
@@ -37,8 +38,8 @@
         </nav>
       </div>
       <div class="mt-4 flex flex-col items-center">
-        <img src="timelessmilesfakelogo-removebg-preview.png" alt="Timeless Smiles Logo" width="250" height="250">
-      
+        <!-- ✅ Make the logo responsive -->
+        <img src="timelessmilesfakelogo-removebg-preview.png" alt="Timeless Smiles Logo" class="w-40 sm:w-56 md:w-64 h-auto">
       </div>
     </header>
 
@@ -48,44 +49,72 @@
 
     <main id="calendarSection" class="p-6 space-y-6">
       <div class="text-center text-pink-600 font-bold text-xl">Timeless Smiles Calendar</div>
-      <div id="calendar" class="bg-white shadow rounded-section p-4 max-w-4xl mx-auto"></div>
+      <!-- ✅ Calendar now fits screen on mobile -->
+      <div id="calendar" class="bg-white shadow rounded-section p-4 max-w-full sm:max-w-4xl mx-auto"></div>
     </main>
 
-    <section id="membersSection" class="p-6 max-w-4xl mx-auto">
+    <section id="membersSection" class="p-6 max-w-full sm:max-w-4xl mx-auto">
       <div class="bg-white border shadow p-4 rounded-section">
         <div class="text-pink-700 font-semibold text-lg mb-4">Club Members</div>
         <ul class="divide-y">
-          <li class="py-4 px-2 member-card"><span class="font-medium text-green-800">Vrishank Arun</span><br><span class="text-sm text-gray-600">President</span><div class="text-sm text-gray-500 mt-1">Phone: (510) 557‑1915<br>Email: vriaru392@fusdk12.net</div></li>
-          <li class="py-4 px-2 member-card"><span class="font-medium text-green-800">Lochan Polisetty</span><br><span class="text-sm text-gray-600">Vice President</span><div class="text-sm text-gray-500 mt-1">Phone: (510) 320‑2666<br>Email: locpol153@fusdk12.net</div></li>
-          <li class="py-4 px-2 member-card"><span class="font-medium text-green-800">Shanvi Gupta</span><br><span class="text-sm text-gray-600">Treasurer / Secretary</span><div class="text-sm text-gray-500 mt-1">Phone: (555) 345‑6789<br>Email: shanvi@example.com</div></li>
-          <li class="py-4 px-2 member-card"><span class="font-medium text-green-800">Aarna Bulusu</span><br><span class="text-sm text-gray-600">Publicist</span><div class="text-sm text-gray-500 mt-1">Phone: (510) 440‑7051<br>Email: aarbul294@fusdk12.net</div></li>
+          <li class="py-4 px-2 member-card">
+            <span class="font-medium text-green-800">Vrishank Arun</span><br>
+            <span class="text-sm text-gray-600">President</span>
+            <div class="text-sm text-gray-500 mt-1 break-words"> <!-- ✅ break words on small screens -->
+              Phone: (510) 557-1915<br>Email: vriaru392@fusdk12.net
+            </div>
+          </li>
+          <li class="py-4 px-2 member-card">
+            <span class="font-medium text-green-800">Lochan Polisetty</span><br>
+            <span class="text-sm text-gray-600">Vice President</span>
+            <div class="text-sm text-gray-500 mt-1 break-words">
+              Phone: (510) 320-2666<br>Email: locpol153@fusdk12.net
+            </div>
+          </li>
+          <li class="py-4 px-2 member-card">
+            <span class="font-medium text-green-800">Shanvi Gupta</span><br>
+            <span class="text-sm text-gray-600">Treasurer / Secretary</span>
+            <div class="text-sm text-gray-500 mt-1 break-words">
+              Phone: (555) 345-6789<br>Email: shanvi@example.com
+            </div>
+          </li>
+          <li class="py-4 px-2 member-card">
+            <span class="font-medium text-green-800">Aarna Bulusu</span><br>
+            <span class="text-sm text-gray-600">Publicist</span>
+            <div class="text-sm text-gray-500 mt-1 break-words">
+              Phone: (510) 440-7051<br>Email: aarbul294@fusdk12.net
+            </div>
+          </li>
         </ul>
       </div>
     </section>
 
-    <section id="aboutSection" class="p-6 max-w-4xl mx-auto">
+    <section id="aboutSection" class="p-6 max-w-full sm:max-w-4xl mx-auto">
       <div class="bg-white border shadow p-4 space-y-4 rounded-section hover-scale">
         <h2 class="text-pink-700 font-semibold text-lg">About Us</h2>
         <p class="text-gray-700">Timeless Smiles is a high-school club dedicated to brightening our community through monthly volunteer visits, fundraising for local causes, and creative kindness campaigns. Our mission is simple: share a smile, spark hope, and build lasting connections.</p>
         <div>
           <h3 class="font-semibold text-green-800 mb-1">Connect with us</h3>
           <ul class="list-disc list-inside text-gray-700">
-  <li>
-    Instagram: 
-    <a href="https://instagram.com/jfktimeless.smiles" 
-       class="text-pink-600 hover:underline" 
-       target="_blank">@TimelessSmiles</a>
-  </li>
-  <li>
-    Remind Code: 
-    <span class="text-pink-600">timeless26</span>
-  </li>
-  <li>
-    Email: 
-    <span class="text-pink-600">jfktitanstimelesssmiles@gmail.com</span>
-  </li>
-</ul>
-
+            <li>
+              Instagram: 
+              <a href="https://instagram.com/jfktimeless.smiles" 
+                 class="text-pink-600 hover:underline" 
+                 target="_blank">@TimelessSmiles</a>
+            </li>
+            <li>
+              Remind Code: 
+              <span class="text-pink-600">timeless26</span>
+            </li>
+            <li>
+              Email: 
+              <span class="text-pink-600">jfktitanstimelesssmiles@gmail.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <script>
     let calendarInstance;
@@ -139,6 +168,7 @@
   </script>
 </body>
 </html>
+
 
 
 
